@@ -1,0 +1,75 @@
+apply plugin: 'com.android.library'
+apply plugin: 'com.jakewharton.butterknife'
+
+android {
+    compileSdkVersion rootProject.ext.android.compileSdkVersion
+    buildToolsVersion rootProject.ext.android.buildToolsVersion
+
+
+    defaultConfig {
+        minSdkVersion rootProject.ext.android.minSdkVersion
+        targetSdkVersion rootProject.ext.android.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility = rootProject.ext.compatibility.sourceCompatibility
+        targetCompatibility = rootProject.ext.compatibility.targetCompatibility
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    implementation rootProject.ext.androidx["appcompat"]
+    //butterknife
+    api rootProject.ext.dependencies.butterknife
+    //rxjava
+    api rootProject.ext.rx.rxjava
+    api rootProject.ext.rx.rxandroid
+    //rxlifecycle
+    api rootProject.ext.rx.rxlifecycle
+    api rootProject.ext.rx["rxlifecycle-android"]
+    api rootProject.ext.rx["rxlifecycle-components"]
+    //rxbinding
+    api rootProject.ext.rx.rxbinding
+    //network
+    api rootProject.ext.dependencies.okhttp
+    api rootProject.ext.dependencies["logging-interceptor"]
+    api rootProject.ext.dependencies.retrofit
+    api rootProject.ext.dependencies["converter-gson"]
+    api rootProject.ext.dependencies["adapter-rxjava"]
+    //json解析
+    api rootProject.ext.dependencies.gson
+    //修复系统Toast
+    api rootProject.ext.dependencies.toast
+    //Google LiveData和ViewModel组件
+    api rootProject.ext.jetpack["lifecycle-extensions"]
+    api rootProject.ext.jetpack["lifecycle-common-java8"]
+    //room
+    api rootProject.ext.jetpack["room-runtime"]
+    annotationProcessor rootProject.ext.jetpack["room-compiler"]
+
+    api(rootProject.ext.dependencies["utilcode"]) {
+        exclude group: 'com.google.code.gson', module: 'gson'
+    }
+    //权限获取
+    api rootProject.ext.dependencies["easypermissions"]
+
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+
+}
